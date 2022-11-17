@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import  Axios  from 'axios';
 
 function CreatePost() {
     const [email, setContent] = useState(null);
     const [password, setLocation] = useState(null);
+    // const addPost=()=>{
+    // Axios.post('http://localhost:3000/CreatePost',{
+        
+    // })
+    // }
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "postContent") {
@@ -34,7 +40,7 @@ function CreatePost() {
                     </div>
                 </div>
                 <div class="post-btn">
-                    <button onClick={() => handleSubmit()} type="submit" className="btn btn-success">Objavi</button>
+                    <button type="submit" className="btn btn-success">Objavi</button>
                 </div>
             </div>
         </div>

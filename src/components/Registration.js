@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react";
 import "./Components.css";
+import axios from 'axios';
 
 function Registration() {
+
     const initialValues = { firstName: "", lastName: "", email: "", password: "", confirmPassword: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-
+    const addUser =async () => {
+        await axios.post('http://localhost:3001/Registration', {
+            firstName: formValues.firstName,
+            lastName: formValues.lastName,
+            email: formValues.email,
+            password: formValues.password
+        }).then(()=>{
+            console.log("success");
+        })
+    };
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -32,13 +43,13 @@ function Registration() {
         }
         else if (values.firstName.length < 2) {
             errors.firstName = "Ime mora biti veće od dva karaktera!";
-        } 
+        }
         if (!values.lastName) {
             errors.lastName = "Unesite prezime!";
         }
         else if (values.lastName.length < 3) {
             errors.lastName = "Prezime mora biti veće od tri karaktera!";
-        } 
+        }
         if (!values.email) {
             errors.email = "Unesite Email!";
         } else if (!regex.test(values.email)) {
@@ -48,8 +59,8 @@ function Registration() {
             errors.password = "Unesite lozinku!";
         } else if (values.password.length < 4) {
             errors.password = "Lozinka mora biti veća od četiri karaktera!";
-        } 
-        if (values.password !=values.confirmPassword) {
+        }
+        if (values.password !== values.confirmPassword) {
             errors.confirmPassword = "Neispravna lozinka";
         }
         return errors;
@@ -120,7 +131,7 @@ function Registration() {
                         />
                     </div>
                     <p>{formErrors.confirmPassword}</p>
-                    <button type="submit" className="btn btn-success">Registracija</button>
+                    <button onClick={addUser} type="submit" className="btn btn-success">Registracija</button>
                 </div>
             </form>
         </div>
