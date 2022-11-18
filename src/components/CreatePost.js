@@ -36,6 +36,7 @@ function CreatePost() {
     }, [formErrors]);
     const validate = (values) => {
         const errors = {};
+       
         if (!values.content) {
             errors.content = "Upišite objavu!";
         }
@@ -68,10 +69,10 @@ function CreatePost() {
                                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
                                 </svg>
                             </span>
-                            <input value={formValues.adress} name="adress" type="text" className='form-control' placeholder="Lokacija" aria-label="Input group example" aria-describedby="basic-addon1" onChange={handleChange} />
+                            <input  name="adress" type="text" className='form-control' placeholder="Lokacija" value={formValues.adress} aria-label="Input group example" aria-describedby="basic-addon1" onChange={handleChange} />
                         </div>
                     </div>
-                    <p>{formErrors.lastName}</p>
+                    <p>{formErrors.adress}</p>
                     <button type="submit" className="btn btn-success">Objavi</button>
                 </div>
             </form>
