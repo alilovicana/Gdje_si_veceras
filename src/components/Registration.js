@@ -1,21 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useTransition } from 'react-transition-state';
 import "./Components.css";
 import axios from 'axios';
+import bcrypt from 'bcryptjs'
+const salt = bcrypt.genSaltSync(10);
 
 function Registration() {
-
     const initialValues = { firstName: "", lastName: "", email: "", password: "", confirmPassword: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-    const addUser =async () => {
+    const passwordInputRef = useRef();
+   
+    const addUser = async () => {
+        const password = passwordInputRef.current.value;
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        formValues.password=hashedPassword;
+        formValues.confirmPassword=hashedPassword;
         await axios.post('http://localhost:3001/Registration', {
             firstName: formValues.firstName,
             lastName: formValues.lastName,
             email: formValues.email,
-            password: formValues.password
-        }).then(()=>{
+            password:formValues.password
+        }).then(() => {
             console.log("success");
+            console.log(formValues);
+            setFormValues(initialValues);
         })
     };
     const handleChange = (e) => {
@@ -28,11 +38,10 @@ function Registration() {
         setFormErrors(validate(formValues));
         setIsSubmit(true);
     };
-
     useEffect(() => {
         console.log(formErrors);
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formValues);
+           addUser();
         }
     }, [formErrors]);
     const validate = (values) => {
@@ -65,7 +74,6 @@ function Registration() {
         }
         return errors;
     };
-
     return (
         <div className="container">
             {Object.keys(formErrors).length === 0 && isSubmit ? (
@@ -112,6 +120,7 @@ function Registration() {
                     <div className="field">
                         <label>Lozinka</label>
                         <input
+                            ref={passwordInputRef}
                             type="password"
                             name="password"
                             placeholder="Lozinka"
@@ -131,7 +140,7 @@ function Registration() {
                         />
                     </div>
                     <p>{formErrors.confirmPassword}</p>
-                    <button onClick={addUser} type="submit" className="btn btn-success">Registracija</button>
+                    <button type="submit" className="btn btn-success">Registracija</button>
                 </div>
             </form>
         </div>
