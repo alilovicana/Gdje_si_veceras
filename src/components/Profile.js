@@ -53,8 +53,8 @@ const Profile = () => {
           src={profileFinal.length ? profileFinal : img} alt=""
         />
         <label htmlFor='' className='mt-3 font-semibold text-5xl'>Ana Alilovic</label>
-        <div class="modal" tabindex="-1">
-          <div class="modal-dialog">
+        <div className="modal" tabindex="-1">
+          <div className="modal-dialog">
             <Dialog
               visible={imagecrop}
               header={() => (
@@ -111,11 +111,11 @@ const Profile = () => {
           </div>
           <div className="oMeni">
             <label className="form__label" for="confirmPassword">O meni:</label>
-            <textarea name="post_content" id="postContent" cols="50" rows="8" ></textarea>
+            <textarea name="post_content" id="content" cols="50" rows="8" ></textarea>
           </div>
         </div>
-        <div class="register-btn">
-          <button onClick={() => handleSubmit()} type="submit" class="btn btn-success">Sačuvaj</button>
+        <div className="register-btn">
+          <button onClick={() => handleSubmit()} type="submit" className="btn btn-success">Sačuvaj</button>
         </div>
       </div>
     </div>

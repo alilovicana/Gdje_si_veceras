@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { useTransition } from 'react-transition-state';
 import "./Components.css";
 import axios from 'axios';
 import bcrypt from 'bcryptjs'
-const salt = bcrypt.genSaltSync(10);
 
 function Registration() {
     const initialValues = { firstName: "", lastName: "", email: "", password: "", confirmPassword: "" };
@@ -11,20 +9,19 @@ function Registration() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const passwordInputRef = useRef();
-   
+
     const addUser = async () => {
         const password = passwordInputRef.current.value;
         const hashedPassword = bcrypt.hashSync(password, 10);
-        formValues.password=hashedPassword;
-        formValues.confirmPassword=hashedPassword;
+        formValues.password = hashedPassword;
+        formValues.confirmPassword = hashedPassword;
         await axios.post('http://localhost:3001/Registration', {
             firstName: formValues.firstName,
             lastName: formValues.lastName,
             email: formValues.email,
-            password:formValues.password
+            password: formValues.password
         }).then(() => {
             console.log("success");
-            console.log(formValues);
             setFormValues(initialValues);
         })
     };
@@ -41,7 +38,7 @@ function Registration() {
     useEffect(() => {
         console.log(formErrors);
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-           addUser();
+            addUser();
         }
     }, [formErrors]);
     const validate = (values) => {

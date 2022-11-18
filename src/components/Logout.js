@@ -6,7 +6,7 @@ const LogOut = () => {
     <div className='video'>
       <video src={video} autoPlay />
       <div className="logout-btn">
-        <button type="submit" className="btn btn-success">Odjavarrr</button>
+        <button type="submit" className="btn btn-success">Odjava</button>
       </div>
     </div>
 
