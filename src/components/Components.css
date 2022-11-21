@@ -63,19 +63,24 @@ body {
   padding: 20px;
   /* height: 600px; */
 }
-.field input{
+
+.field input {
   width: 60%;
   width: 200px;
 }
-.field label{
+
+.field label {
   width: 40%;
 }
-.form p{
+
+.form p {
   color: red;
 }
-.form button{
+
+.form button {
   display: center;
 }
+
 .form-body {
   text-align: left;
   padding: 20px 10px;
@@ -88,19 +93,24 @@ body {
 .form__label {
   width: 40%;
 }
+
 .form_input {
   width: 60%;
 }
+
 .register-btn {
   text-align: center;
 }
-.register-btn button{
+
+.register-btn button {
   margin-right: 400px;
 }
+
 /*Ads*/
-.content .container .row button{
+.content .container .row button {
   margin-top: 11px;
 }
+
 .town-filter {
   padding-top: 17px;
   margin-left: 80px;
@@ -121,7 +131,7 @@ body {
 }
 
 /*Kreiraj oglas*/
-.createPost textarea {
+.CreateAds textarea {
   padding: 5px;
 }
 
@@ -163,4 +173,21 @@ body {
   display: block;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
+}
+
+/*showAds*/
+.showAds {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.showAds .ad {
+  width: 700px;
+  height: 180px;
+  padding:20px;
+  margin:20px;
+  background-color: lightgray;
+  border:1px solid black;
 }

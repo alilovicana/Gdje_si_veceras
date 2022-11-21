@@ -8,7 +8,7 @@ function NavBar() {
     return (
         <ul >
             <li onClick={refreshPage}><Link to="/">OGLASI</Link></li>
-            <li onClick={refreshPage}><Link to="/CreatePost">KREIRAJ OGLAS</Link></li>
+            <li onClick={refreshPage}><Link to="/CreateAds">KREIRAJ OGLAS</Link></li>
             <li onClick={refreshPage}><Link to="/Login">PRIJAVA</Link></li>
             <li onClick={refreshPage}><Link to="/Profile">PROFIL</Link></li>
             <li onClick={refreshPage}><Link to="/Registration">REGISTRACIJA</Link></li>

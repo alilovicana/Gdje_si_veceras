@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import "./Components.css";
 import axios from 'axios';
+import PlacesAutocomplete from 'react-places-autocomplete';
 
 
-function CreatePost() {
+function CreateAds() {
     const initialValues = { content: "", adress: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
 
     const addPost = async () => {
-        await axios.post('http://localhost:3001/CreatePost', {
+        await axios.post('http://localhost:3001/CreateAds', {
             content: formValues.content,
             adress: formValues.adress
         }).then(() => {
@@ -51,7 +52,7 @@ function CreatePost() {
     return (
         <div className="container">
             {Object.keys(formErrors).length === 0 && isSubmit ? (
-                <div className="ui message success">Uspješno ste kreirali post!</div>
+                <div className="ui message success">Uspješno ste kreirali oglas!</div>
             ) : (
                 <div className="ui message success">...</div>
             )}
@@ -80,4 +81,4 @@ function CreatePost() {
     );
 }
 
-export default CreatePost;
+export default CreateAds;

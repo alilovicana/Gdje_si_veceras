@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import Profile from './components/Profile';
-import CreatePost from './components/CreatePost.js';
+import CreateAds from './components/CreateAds.js';
 import Login from './components/Login.js';
 import Ads from './components/Ads.js';
 import Logout from './components/Logout';
@@ -18,7 +18,7 @@ function App() {
       <HeaderImg/>
       <div className="content">
         <Route exact path="/" component={Ads} />
-        <Route exact path="/CreatePost" component={CreatePost} />
+        <Route exact path="/CreateAds" component={CreateAds} />
         <Route exact path="/Profile" component={Profile} />
         <Route exact path="/Login" component={Login} />
         <Route exact path="/Registration" component={Registration} />
