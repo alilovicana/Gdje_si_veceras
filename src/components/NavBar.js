@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom';
 
 function NavBar() {
     const refreshPage = () => {
@@ -7,12 +7,12 @@ function NavBar() {
     }
     return (
         <ul >
-            <li onClick={refreshPage}><Link to="/">OGLASI</Link></li>
-            <li onClick={refreshPage}><Link to="/CreateAds">KREIRAJ OGLAS</Link></li>
-            <li onClick={refreshPage}><Link to="/Login">PRIJAVA</Link></li>
-            <li onClick={refreshPage}><Link to="/Profile">PROFIL</Link></li>
-            <li onClick={refreshPage}><Link to="/Registration">REGISTRACIJA</Link></li>
-            <li onClick={refreshPage}><Link to="/Logout">ODJAVA</Link></li>
+            <li onClick={refreshPage}><NavLink to="/">OGLASI</NavLink></li>
+            <li onClick={refreshPage}><NavLink to="/CreateAds">KREIRAJ OGLAS</NavLink></li>
+            <li onClick={refreshPage}><NavLink to="/Login">PRIJAVA</NavLink></li>
+            <li onClick={refreshPage}><NavLink to="/Profile">PROFIL</NavLink></li>
+            <li onClick={refreshPage}><NavLink to="/Registration">REGISTRACIJA</NavLink></li>
+            <li onClick={refreshPage}><NavLink to="/Logout">ODJAVA</NavLink></li>
         </ul>
     )
 }

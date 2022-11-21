@@ -18,7 +18,7 @@ function Ads() {
       showAdsList(response.data);
     })
   };
-  const events = [{ text: "Studentska događanja" }, { text: "Druženja u kafićima" }, { text: "Privatne zabave" }, { text: "Sport-termini" }];
+  const events = [{text: "Kategorije" }, { text: "Kafići" },{ text: "Klubovi" },{ text: "Restorani" }, { text: "Sport" },{text: "Kultura" },{ text: "Priroda" },{ text: "Studentska događanja" },{ text: "Privatne zabave" }];
   return (
     <div className="container">
       <div className="row">

@@ -38,13 +38,24 @@ body {
   list-style: none;
 }
 
-.header .navbar ul li {
+.active,.header .navbar ul li {
   display: inline-block;
-  padding: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-top: 5px;
 }
 
-.header .navbar ul li a {
+ .header .navbar ul li a {
   color: rgb(142, 152, 138);
+  text-decoration: none;
+}
+.active, .header .navbar ul li:hover{
+  background-color:orange;
+  text-decoration: none;
+}
+.active, .header .navbar ul li a:hover {
+  color: rgb(10, 10, 10) !important;
 }
 
 .backgroundImage {
