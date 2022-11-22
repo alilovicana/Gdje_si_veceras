@@ -1,6 +1,6 @@
 import React from "react";
 import JSONDATA from '../MOCK_DATA.json';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './Components.css';
@@ -11,6 +11,7 @@ function Ads() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [adsList, showAdsList] = useState([]);
   const [currLike, setLike] = useState(0);
+
   const getAds = async () => {
     await axios.get('http://localhost:3001/showAds').then((response) => {
       showAdsList(response.data);
@@ -26,6 +27,9 @@ function Ads() {
     })
   };
   const events = [{ text: "Kategorije" }, { text: "Kafići" }, { text: "Klubovi" }, { text: "Restorani" }, { text: "Sport" }, { text: "Kultura" }, { text: "Priroda" }, { text: "Studentska događanja" }, { text: "Privatne zabave" }];
+  useEffect(() => {//Shows Ads when I load the page
+    getAds();
+  }, []);
   return (
     <div className="container">
       <div className="row">
@@ -62,10 +66,10 @@ function Ads() {
           </div>
         </div>
         <div className="col-md-1">
-          <button type="submit" className="btn btn-success" onClick={getAds}>Filtriraj</button>
+          <button type="submit" className="btn btn-success">Filtriraj</button>
         </div>
       </div>
-      <div className="showAds">
+      <div className="showAds" >
         {adsList.map((val, key) => {
           return <div className="ad" key={key}>
             <h4> {val.content}</h4>
