@@ -40,24 +40,22 @@ body {
 
 .active,.header .navbar ul li {
   display: inline-block;
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-bottom: 10px;
-  padding-top: 5px;
+  padding: 5px;
 }
 
  .header .navbar ul li a {
   color: rgb(142, 152, 138);
   text-decoration: none;
+  padding: 10px;
 }
 .active, .header .navbar ul li:hover{
   background-color:orange;
+  color: rgb(10, 10, 10) !important;
   text-decoration: none;
 }
 .active, .header .navbar ul li a:hover {
   color: rgb(10, 10, 10) !important;
 }
-
 .backgroundImage {
   max-width: 2000px;
   height: 150px;
