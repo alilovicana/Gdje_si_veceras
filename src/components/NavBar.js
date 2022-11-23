@@ -3,9 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 function NavBar(props) {
     const { isUserLoggedIn, userAutetication } = props
-    const refreshPage = () => {
-        window.location.reload();
-    }
     return (
         <div>
             {
@@ -23,9 +20,7 @@ function NavBar(props) {
                         <li ><NavLink to="/Registration">REGISTRACIJA</NavLink></li>
                     </ul>
                 )
-
             }
-
         </div>
     )
 }

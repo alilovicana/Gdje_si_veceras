@@ -2,18 +2,16 @@ import { useState, useEffect, useRef } from "react";
 import "./Components.css";
 import axios from 'axios';
 import PlacesAutocomplete from 'react-places-autocomplete';
-import { getAllByDisplayValue } from "@testing-library/react";
+import {useHistory} from 'react-router-dom'
 
 
 function CreateAds() {
+    let redirect=useHistory();
     const initialValues = { content: "", adress: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
 
-    const refreshPage = () => {
-        window.location.reload();
-    }
     const addPost = async () => {
         await axios.post('http://localhost:3001/CreateAds', {
             content: formValues.content,
@@ -21,6 +19,7 @@ function CreateAds() {
         }).then(() => {
             console.log('success');
             setFormValues(initialValues);
+            redirect.push('/');
         })
     };
     const handleChange = (e) => {

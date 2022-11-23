@@ -15,7 +15,7 @@ function Header() {
             <div className="title">Gdje si večeras?</div>
           </div>
           <div className='col-md-7'>
-            <div className='navbar'>  <NavBar isUserLoggedIn={isUserLoggedIn} userAutetication={userAutetication}/></div>
+            <div className='navbar'><NavBar isUserLoggedIn={isUserLoggedIn} userAutetication={userAutetication}/></div>
           </div>
         </div>
       </div>

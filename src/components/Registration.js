@@ -1,15 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import "./Components.css";
 import axios from 'axios';
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs';
+import {useHistory} from 'react-router-dom'
 
 function Registration() {
+    let redirect=useHistory();
     const initialValues = { firstName: "", lastName: "", email: "", password: "", confirmPassword: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const passwordInputRef = useRef();
-
+    
     const addUser = async () => {
         const password = passwordInputRef.current.value;
         const hashedPassword = bcrypt.hashSync(password, 10);
@@ -23,6 +25,7 @@ function Registration() {
         }).then(() => {
             console.log("success");
             setFormValues(initialValues);
+            redirect.push('/Login');
         })
     };
     const handleChange = (e) => {
