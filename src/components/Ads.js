@@ -1,33 +1,44 @@
 import React from "react";
 import JSONDATA from '../MOCK_DATA.json';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './Components.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 function Ads() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [adsList, showAdsList] = useState([]);
-  const [currLike, setLike] = useState(0);
 
   const getAds = async () => {
     await axios.get('http://localhost:3001/showAds').then((response) => {
       showAdsList(response.data);
     })
   };
-  const addLike = async (id) => {
-    setLike(currLike => currLike + 1);
+  const addLike = async (id, likes) => {
     await axios.put('http://localhost:3001/update', {
-      id: id,
-      likes: currLike
+      id,
+      likes
     }).then((response) => {
-      console.log('sucess');
+      const newState = adsList.map(list => {
+        if (list.id === id) {
+          return {...list, likes };
+        }
+        return list;
+      })
+      showAdsList(newState);
     })
   };
+  const handleClick = (event) => {
+    event.currentTarget.disabled = true;
+    console.log(event);
+    console.log('button clicked');
+  };
   const events = [{ text: "Kategorije" }, { text: "Kafići" }, { text: "Klubovi" }, { text: "Restorani" }, { text: "Sport" }, { text: "Kultura" }, { text: "Priroda" }, { text: "Studentska događanja" }, { text: "Privatne zabave" }];
-  useEffect(() => {//Shows Ads when I load the page
+  //Shows Ads when I load the page
+  useEffect(() => {
     getAds();
   }, []);
   return (
@@ -66,7 +77,7 @@ function Ads() {
           </div>
         </div>
         <div className="col-md-1">
-          <button type="submit" className="btn btn-success">Filtriraj</button>
+          <button type="submit" onClick={handleClick} className="btn btn-success">Filtriraj</button>
         </div>
       </div>
       <div className="showAds" >
@@ -79,19 +90,12 @@ function Ads() {
             <h5>Likes: {val.likes}</h5>
             <div>
               {""}
-              <input
-                type="text"
-                placeholder="2000..."
-                onChange={(event) => {
-                  setLike(event.target.value);
-                }}
-              />
-              <button type="submit" onClick={() => { addLike(val.id) }} className="btn btn-success">LIKE</button>
+              <button type="submit" onClick={(e) => {addLike(val.id, val.likes + 1);handleClick(e)}} className="btn btn-success" > LIKE</button>
             </div>
           </div>
         })}
       </div>
-    </div>
+    </div >
   )
 }
 export default Ads;
