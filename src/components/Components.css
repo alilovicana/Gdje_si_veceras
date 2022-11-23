@@ -36,6 +36,7 @@ body {
 
 .header .navbar ul {
   list-style: none;
+  margin-left: 300px;
 }
 
 .active,.header .navbar ul li {

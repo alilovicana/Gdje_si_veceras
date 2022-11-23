@@ -7,22 +7,23 @@ import Login from './components/Login.js';
 import Ads from './components/Ads.js';
 import Logout from './components/Logout';
 import Registration from './components/Registration.js';
-import { Route, Link } from 'react-router-dom';
+import { Route} from 'react-router-dom';
 import Header from './components/Header';
 import HeaderImg from './components/HeaderImg';
+
 
 function App() {
   return (
     <div className="App" >
-      <Header/>
-      <HeaderImg/>
+      <Header />
+      <HeaderImg />
       <div className="content">
-        <Route exact path="/" component={Ads} />
-        <Route exact path="/CreateAds" component={CreateAds} />
-        <Route exact path="/Profile" component={Profile} />
-        <Route exact path="/Login" component={Login} />
-        <Route exact path="/Registration" component={Registration} />
-        <Route exact path="/Logout" component={Logout} />
+            <Route exact path="/" component={Ads} />
+            <Route exact path="/Login" component={Login} />
+            <Route exact path="/Registration" component={Registration} />
+            <Route exact path="/CreateAds" component={CreateAds} />
+            <Route exact path="/Logout" component={Logout} />
+            <Route exact path="/Profile" component={Profile} />
       </div>
     </div>
   );

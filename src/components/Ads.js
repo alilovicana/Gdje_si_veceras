@@ -77,7 +77,7 @@ function Ads() {
           </div>
         </div>
         <div className="col-md-1">
-          <button type="submit" onClick={handleClick} className="btn btn-success">Filtriraj</button>
+          <button type="submit" className="btn btn-success">Filtriraj</button>
         </div>
       </div>
       <div className="showAds" >
