@@ -1,12 +1,32 @@
 import { useState, useEffect } from "react";
 import "./Components.css";
+import axios from "axios";
 
 function Login() {
-    const initialValues = {email: "", password: ""};
+    const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-
+    const [loginStatus, setLoginStatus] = useState("");
+    const login = async () => {
+       await axios.post("http://localhost:3001/Login", {
+            email: formValues.email,
+            password: formValues.password
+        }).then((response) => {
+            if (response.data.message) {
+                setLoginStatus(response.data.message);
+            } else {
+                setLoginStatus(response.data[0].email);
+            }
+        });
+    };
+    // useEffect(() => {
+    //     axios.get("http://localhost:3001/Login").then((response) => {
+    //         if (response.data.loggedIn == true) {
+    //             setLoginStatus(response.data.user[0].email);
+    //         }
+    //     });
+    // }, []);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -36,7 +56,7 @@ function Login() {
             errors.password = "Unesite lozinku!";
         } else if (values.password.length < 4) {
             errors.password = "Lozinka mora biti veća od četiri karaktera!";
-        } 
+        }
         return errors;
     };
 
@@ -72,8 +92,9 @@ function Login() {
                         />
                     </div>
                     <p>{formErrors.password}</p>
-                    <button type="submit" className="btn btn-success">Prijava</button>
+                    <button onClick={login} type="submit" className="btn btn-success">Prijava</button>
                 </div>
+                <h1>{loginStatus}</h1>
             </form>
         </div>
     );

@@ -11,7 +11,7 @@ function Registration() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const passwordInputRef = useRef();
-    
+   
     const addUser = async () => {
         const password = passwordInputRef.current.value;
         const hashedPassword = bcrypt.hashSync(password, 10);
@@ -44,6 +44,7 @@ function Registration() {
             addUser();
         }
     }, [formErrors]);
+
     const validate = (values) => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;

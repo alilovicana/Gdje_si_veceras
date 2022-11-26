@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./Components.css";
 import axios from 'axios';
-import PlacesAutocomplete from 'react-places-autocomplete';
 import {useHistory} from 'react-router-dom'
 
 
