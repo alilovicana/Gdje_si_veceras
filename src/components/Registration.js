@@ -13,10 +13,6 @@ function Registration() {
     const passwordInputRef = useRef();
    
     const addUser = async () => {
-        const password = passwordInputRef.current.value;
-        const hashedPassword = bcrypt.hashSync(password, 10);
-        formValues.password = hashedPassword;
-        formValues.confirmPassword = hashedPassword;
         await axios.post('http://localhost:3001/Registration', {
             firstName: formValues.firstName,
             lastName: formValues.lastName,

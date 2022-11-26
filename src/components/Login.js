@@ -3,11 +3,14 @@ import "./Components.css";
 import axios from "axios";
 
 function Login() {
+    axios.defaults.withCredentials = true; 
+
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [loginStatus, setLoginStatus] = useState("");
+
     const login = async () => {
        await axios.post("http://localhost:3001/Login", {
             email: formValues.email,
@@ -20,13 +23,13 @@ function Login() {
             }
         });
     };
-    // useEffect(() => {
-    //     axios.get("http://localhost:3001/Login").then((response) => {
-    //         if (response.data.loggedIn == true) {
-    //             setLoginStatus(response.data.user[0].email);
-    //         }
-    //     });
-    // }, []);
+    useEffect(() => {
+        axios.get("http://localhost:3001/Login").then((response) => {
+            if (response.data.loggedIn == true) {
+                setLoginStatus(response.data.user[0].email);
+            }
+        });
+    }, []);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -41,7 +44,7 @@ function Login() {
     useEffect(() => {
         console.log(formErrors);
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formValues);
+            console.log("success");
         }
     }, [formErrors]);
     const validate = (values) => {
