@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import "./Components.css";
 import axios from "axios";
+import { useHistory } from 'react-router-dom'
 
 function Login() {
-    axios.defaults.withCredentials = true; 
+    let redirect = useHistory();
+    axios.defaults.withCredentials = true;
 
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
@@ -12,7 +14,7 @@ function Login() {
     const [loginStatus, setLoginStatus] = useState("");
 
     const login = async () => {
-       await axios.post("http://localhost:3001/Login", {
+        await axios.post("http://localhost:3001/Login", {
             email: formValues.email,
             password: formValues.password
         }).then((response) => {
@@ -20,16 +22,18 @@ function Login() {
                 setLoginStatus(response.data.message);
             } else {
                 setLoginStatus(response.data[0].email);
+                redirect.push('/');
             }
         });
     };
-    useEffect(() => {
-        axios.get("http://localhost:3001/Login").then((response) => {
-            if (response.data.loggedIn == true) {
-                setLoginStatus(response.data.user[0].email);
-            }
-        });
-    }, []);
+    // useEffect(()=> {
+    //     axios.get("http://localhost:3001/Login").then((response) => {
+    //         if (response.data.loggedIn === true) {
+    //             setLoginStatus(response.data.user[0].email);
+    //             console.log("hajjj");
+    //         }
+    //     });
+    // }, []);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -95,7 +99,7 @@ function Login() {
                         />
                     </div>
                     <p>{formErrors.password}</p>
-                    <button onClick={login} type="submit" className="btn btn-success">Prijava</button>
+                        <button onClick={login} type="submit" className="btn btn-success">Prijava</button>
                 </div>
                 <h1>{loginStatus}</h1>
             </form>

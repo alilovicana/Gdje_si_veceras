@@ -18,7 +18,7 @@ function Ads() {
     })
   };
   const addLike = async (id, likes) => {
-    await axios.put('http://localhost:3001/update', {
+    await axios.put('http://localhost:3001/Update', {
       id,
       likes
     }).then((response) => {
