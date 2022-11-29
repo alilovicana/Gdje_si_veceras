@@ -11,18 +11,19 @@ function Login() {
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-    const [loginStatus, setLoginStatus] = useState("");
+    const [loginStatus, setLoginStatus] = useState(false);
 
     const login = async () => {
         await axios.post("http://localhost:3001/Login", {
             email: formValues.email,
             password: formValues.password
         }).then((response) => {
-            if (response.data.message) {
-                setLoginStatus(response.data.message);
+            if (!response.data.auth) {
+                setLoginStatus(false);
             } else {
-                setLoginStatus(response.data[0].email);
-                redirect.push('/');
+                localStorage.setItem("token", response.data.token)
+                setLoginStatus(true);
+                // redirect.push('/');
             }
         });
     };
@@ -34,6 +35,16 @@ function Login() {
     //         }
     //     });
     // }, []);
+    const userAuthenticated=()=>{
+        axios.get("http://localhost:3001/isUserAuth",{
+            headers:{
+                "x-access-token":localStorage.getItem("token"),
+            }, 
+        }).then((response)=>{
+            console.log(response);
+        })
+ 
+    }
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -101,7 +112,10 @@ function Login() {
                     <p>{formErrors.password}</p>
                         <button onClick={login} type="submit" className="btn btn-success">Prijava</button>
                 </div>
-                <h1>{loginStatus}</h1>
+                <h1>{loginStatus && (
+                    <button onClick={userAuthenticated()}>Check if Authenticated!</button>
+                )
+                }</h1>
             </form>
         </div>
     );
