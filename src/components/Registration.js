@@ -71,6 +71,9 @@ function Registration() {
         }
         return errors;
     };
+    const RedirectToLogin=()=>{
+        redirect.push('/Login');
+    }
     return (
         <div className="container">
             {Object.keys(formErrors).length === 0 && isSubmit ? (
@@ -138,6 +141,7 @@ function Registration() {
                     </div>
                     <p>{formErrors.confirmPassword}</p>
                     <button type="submit" className="btn btn-success">Registracija</button>
+                    <button  onClick={RedirectToLogin} type="submit" className="btn btn-success">Imate već registriran račun</button>
                 </div>
             </form>
         </div>

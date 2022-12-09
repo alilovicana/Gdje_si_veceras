@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "./Components.css";
 import axios from 'axios';
 import {useHistory} from 'react-router-dom'
-
+import {withRouter} from "react-router-dom"
 
 function CreateAds() {
     let redirect=useHistory();
@@ -83,4 +83,4 @@ function CreateAds() {
     );
 }
 
-export default CreateAds;
+export default withRouter(CreateAds);

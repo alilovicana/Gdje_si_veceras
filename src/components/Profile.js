@@ -5,6 +5,7 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import img from "./img/profile.png";
 import './Components.css';
+import { withRouter } from 'react-router-dom';
 const Profile = () => {
   const [image, setimage] = useState("")
   const [imagecrop, setimagecrop] = useState(false);
@@ -24,8 +25,8 @@ const Profile = () => {
     setprofile([...profile, { pview }]);
     setimagecrop(false);
   };
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     if (id === "email") {
@@ -49,11 +50,13 @@ const Profile = () => {
           objectFit: "cover",
           border: "4px solid green"
         }}
+          // onClick={()=>setdialogs(true)}
+          src={profileFinal.length ? profileFinal : img}
+          alt=""
           onClick={() => setimagecrop(true)}
-          src={profileFinal.length ? profileFinal : img} alt=""
         />
         <label htmlFor='' className='mt-3 font-semibold text-5xl'>Ana Alilovic</label>
-        <div className="modal" tabindex="-1">
+        <div className="modal" tabIndex="-1">
           <div className="modal-dialog">
             <Dialog
               visible={imagecrop}
@@ -102,15 +105,15 @@ const Profile = () => {
       <div className="form">
         <div className="form-body">
           <div className="email">
-            <label className="form__label" for="email">Email: </label>
+            <label className="form__label" htmlFor="email">Email: </label>
             <input type="email" id="email" className="form__input" value={email} onChange={(e) => handleInputChange(e)} placeholder="Email" />
           </div>
           <div className="Broj Telefona">
-            <label className="form__label" for="password">Broj Telefona: </label>
+            <label className="form__label" htmlFor="password">Broj Telefona: </label>
             <input className="form__input" type="password" id="password" value={password} onChange={(e) => handleInputChange(e)} placeholder="Broj telefona" />
           </div>
           <div className="oMeni">
-            <label className="form__label" for="confirmPassword">O meni:</label>
+            <label className="form__label" htmlFor="confirmPassword">O meni:</label>
             <textarea name="post_content" id="content" cols="50" rows="8" ></textarea>
           </div>
         </div>
@@ -122,4 +125,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default withRouter(Profile)

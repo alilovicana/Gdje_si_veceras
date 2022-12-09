@@ -1,31 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import './Components.css';
-import NavBar from './NavBar';
-import axios from "axios";
+import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import { AuthContext } from "../context/AuthContext"
 
 function Header() {
-  const [isUserLoggedIn, setUserLoggedIn] = useState(false)
-  const userAutetication = () => {
-    setUserLoggedIn(!isUserLoggedIn);
-  }
-  useEffect(() => {
-    axios.get("http://localhost:3001/Login").then((response) => {
-      if (response.data.loggedIn === true) {
-        setUserLoggedIn(true);
-      }
-      else
-         setUserLoggedIn(false);
-    });
-  }, [isUserLoggedIn]);
+  const { user } = useContext(AuthContext);
   return (
     <div className='header'>
       <div className='container'>
         <div className='row'>
           <div className='col-md-5'>
-            <div className="title">Gdje si večeras?</div>
+            <Link to='/' style={{ textDecoration: "none" }}>
+              <div className="title">Gdje si večeras?</div>
+            </Link>
           </div>
           <div className='col-md-7'>
-            <div className='navbar'><NavBar isUserLoggedIn={isUserLoggedIn} userAutetication={userAutetication} /></div>
+            <div className='navbar'>
+            <div>
+            {
+                user? (
+                    <ul >
+                        <li><NavLink to="/">OGLASI</NavLink></li>
+                        <li><NavLink to="/CreateAds">KREIRAJ OGLAS</NavLink></li>
+                        <li ><NavLink to="/Profile">PROFIL</NavLink></li>
+                        <li ><NavLink to="/Logout">ODJAVA</NavLink></li>
+                    </ul>
+                ) : (
+                    <ul >
+                        <li ><NavLink to="/">OGLASI</NavLink></li>
+                        <li ><NavLink to="/Login">PRIJAVA</NavLink></li>
+                        <li ><NavLink to="/Registration">REGISTRACIJA</NavLink></li>
+                    </ul>
+                )
+            }
+        </div>
+            </div>
           </div>
         </div>
       </div>

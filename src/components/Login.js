@@ -1,11 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import "./Components.css";
 import axios from "axios";
 import { useHistory } from 'react-router-dom'
+import { loginCall } from "../apiCalls"
+import { AuthContext } from "../context/AuthContext";
+import { CircularProgress } from "@material-ui/core";
 
 function Login() {
-    let redirect = useHistory();
+    // let redirect = useHistory();
     axios.defaults.withCredentials = true;
+
+    const email = useRef();
+    const password = useRef();
+    const { isFetching, dispatch } = useContext(AuthContext);
+
 
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
@@ -21,30 +29,12 @@ function Login() {
             if (!response.data.auth) {
                 setLoginStatus(false);
             } else {
-                localStorage.setItem("token", response.data.token)
+                loginCall({ email: email.current.value, password: password.current.value },dispatch);
                 setLoginStatus(true);
                 // redirect.push('/');
             }
         });
     };
-    // useEffect(()=> {
-    //     axios.get("http://localhost:3001/Login").then((response) => {
-    //         if (response.data.loggedIn === true) {
-    //             setLoginStatus(response.data.user[0].email);
-    //             console.log("hajjj");
-    //         }
-    //     });
-    // }, []);
-    const userAuthenticated=()=>{
-        axios.get("http://localhost:3001/isUserAuth",{
-            headers:{
-                "x-access-token":localStorage.getItem("token"),
-            }, 
-        }).then((response)=>{
-            console.log(response);
-        })
- 
-    }
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -91,11 +81,12 @@ function Login() {
                     <div className="field">
                         <label>Email</label>
                         <input
-                            type="text"
+                            type="email"
                             name="email"
                             placeholder="Email"
                             value={formValues.email}
                             onChange={handleChange}
+                            ref={email}
                         />
                     </div>
                     <p>{formErrors.email}</p>
@@ -107,15 +98,16 @@ function Login() {
                             placeholder="Lozinka"
                             value={formValues.password}
                             onChange={handleChange}
+                            ref={password}
                         />
                     </div>
                     <p>{formErrors.password}</p>
-                        <button onClick={login} type="submit" className="btn btn-success">Prijava</button>
+                    <button onClick={login} type="submit" className="btn btn-success" disabled={isFetching}> {isFetching ? (
+                       <CircularProgress color="white" size="20px" />
+                    ) : (
+                        "Prijava"
+                    )}</button>
                 </div>
-                <h1>{loginStatus && (
-                    <button onClick={userAuthenticated()}>Check if Authenticated!</button>
-                )
-                }</h1>
             </form>
         </div>
     );
