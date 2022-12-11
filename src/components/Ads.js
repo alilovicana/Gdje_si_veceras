@@ -1,16 +1,18 @@
 import React from "react";
 import JSONDATA from '../MOCK_DATA.json';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './Components.css';
 import axios from 'axios';
+import { AuthContext } from "../context/AuthContext";
 import { Link } from 'react-router-dom';
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 function Ads() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [adsList, showAdsList] = useState([]);
+  const [user, setUser] = useState({});
+  // const { user } = useContext(AuthContext);
 
   const getAds = async () => {
     await axios.get('http://localhost:3001/showAds').then((response) => {
@@ -24,7 +26,7 @@ function Ads() {
     }).then((response) => {
       const newState = adsList.map(list => {
         if (list.id === id) {
-          return {...list, likes };
+          return { ...list, likes };
         }
         return list;
       })
@@ -83,6 +85,20 @@ function Ads() {
       <div className="showAds" >
         {adsList.map((val, key) => {
           return <div className="ad" key={key}>
+            <div className="postTopLeft">
+              <Link to={`/profile/${user.username}`}>
+                <img
+                  className="postProfileImg"
+                  src={
+                    user.profilePicture
+                      ?  user.profilePicture
+                      : "person/noAvatar.png"
+                  }
+                  alt=""
+                />
+              </Link>
+              <span className="postUsername">{user.username}</span>
+            </div>
             <h4> {val.content}</h4>
             <h5><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#bb2d3b" className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
@@ -90,7 +106,7 @@ function Ads() {
             <h5>Likes: {val.likes}</h5>
             <div>
               {""}
-              <button type="submit" onClick={(e) => {addLike(val.id, val.likes + 1);handleClick(e)}} className="btn btn-success" > LIKE</button>
+              <button type="submit" onClick={(e) => { addLike(val.id, val.likes + 1); handleClick(e) }} className="btn btn-success" > LIKE</button>
             </div>
           </div>
         })}

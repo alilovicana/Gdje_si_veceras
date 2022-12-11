@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
 
 function Login() {
-    // let redirect = useHistory();
+    let redirect = useHistory();
     axios.defaults.withCredentials = true;
 
     const email = useRef();
@@ -31,7 +31,7 @@ function Login() {
             } else {
                 loginCall({ email: email.current.value, password: password.current.value },dispatch);
                 setLoginStatus(true);
-                // redirect.push('/');
+                redirect.push('/');
             }
         });
     };

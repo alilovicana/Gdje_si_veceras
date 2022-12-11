@@ -1,18 +1,21 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import "./Components.css";
 import axios from 'axios';
 import {useHistory} from 'react-router-dom'
 import {withRouter} from "react-router-dom"
-
+import { AuthContext } from "../context/AuthContext"
 function CreateAds() {
     let redirect=useHistory();
     const initialValues = { content: "", adress: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-
+    const { user } = useContext(AuthContext);
+   
     const addPost = async () => {
+        console.log(user);
         await axios.post('http://localhost:3001/CreateAds', {
+            user_id: user.result[0].id,
             content: formValues.content,
             adress: formValues.adress
         }).then(() => {
