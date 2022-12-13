@@ -8,12 +8,20 @@ import axios from 'axios';
 import { AuthContext } from "../context/AuthContext";
 import { Link } from 'react-router-dom';
 
+
 function Ads() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [adsList, showAdsList] = useState([]);
   const [user, setUser] = useState({});
   // const { user } = useContext(AuthContext);
 
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const res = await axios.get(`/users?userId=${adsList.userId}`);
+  //     setUser(res.data);
+  //   };
+  //   fetchUser();
+  // }, [adsList.userId]);
   const getAds = async () => {
     await axios.get('http://localhost:3001/showAds').then((response) => {
       showAdsList(response.data);
@@ -86,7 +94,7 @@ function Ads() {
         {adsList.map((val, key) => {
           return <div className="ad" key={key}>
             <div className="postTopLeft">
-              <Link to={`/profile/${user.username}`}>
+              {/* <Link to={`/profile/${user.username}`}>
                 <img
                   className="postProfileImg"
                   src={
@@ -96,7 +104,7 @@ function Ads() {
                   }
                   alt=""
                 />
-              </Link>
+              </Link> */}
               <span className="postUsername">{user.username}</span>
             </div>
             <h4> {val.content}</h4>

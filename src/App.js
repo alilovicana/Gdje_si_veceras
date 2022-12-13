@@ -19,11 +19,11 @@ function App() {
       <HeaderImg />
       <div className="content">
         <Route exact path="/"><Ads /></Route>
-        <Route exact path="/Login">{user ? <Redirect to="/" /> : <Login />}</Route>
-        <Route exact path="/Registration">{user ? <Redirect to="/" /> : <Registration/>}</Route>
-        <Route exact path="/CreateAds" >{user ? <CreateAds/> : <Registration />}</Route>
-        <Route exact path="/Logout">{user ? <Logout/> : <Ads/>}</Route>
-        <Route exact path="/Profile" >{user ? <Profile/> : <Registration />}</Route>
+        <Route path="/Login">{user ? <Redirect to="/" /> : <Login />}</Route>
+        <Route path="/Registration">{user ? <Redirect to="/" /> : <Registration />}</Route>
+        <Route path="/CreateAds" >{user ? <CreateAds /> : <Registration />}</Route>
+        <Route path="/Logout">{user ? <Logout /> : <Ads />}</Route>
+        <Route path="/Profile" >{user ? <Profile /> : <Registration />}</Route>
       </div>
     </div>
 

@@ -22,7 +22,7 @@ function Header() {
                 user? (
                     <ul >
                         <li><NavLink to="/">OGLASI</NavLink></li>
-                        <li><NavLink to="/CreateAds">KREIRAJ OGLAS</NavLink></li>
+                        <li><NavLink to={"/CreateAds"+'/'+user.result[0].id+'/'}>KREIRAJ OGLAS</NavLink></li>
                         <li ><NavLink to="/Profile">PROFIL</NavLink></li>
                         <li ><NavLink to="/Logout">ODJAVA</NavLink></li>
                     </ul>

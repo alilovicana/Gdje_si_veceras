@@ -14,7 +14,7 @@ function CreateAds() {
    
     const addPost = async () => {
         console.log(user);
-        await axios.post('http://localhost:3001/CreateAds', {
+        await axios.post(`http://localhost:3001/CreateAds/${user.result[0].id}`, {
             user_id: user.result[0].id,
             content: formValues.content,
             adress: formValues.adress
