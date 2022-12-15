@@ -201,3 +201,8 @@ body {
   background-color: lightgray;
   border:1px solid black;
 }
+.postUsername {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 10px;
+}

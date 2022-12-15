@@ -1,29 +1,38 @@
 import { useState, useEffect, useRef, useContext } from "react";
+import JSONDATA from '../MOCK_DATA.json';
+import DatePicker from 'react-datepicker';
 import "./Components.css";
 import axios from 'axios';
-import {useHistory} from 'react-router-dom'
-import {withRouter} from "react-router-dom"
+import { useHistory } from 'react-router-dom'
+import { withRouter } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext"
 function CreateAds() {
-    let redirect=useHistory();
-    const initialValues = { content: "", adress: "" };
+    let redirect = useHistory();
+    const [selectedDate, setSelectedDate] = useState(null);
+    const initialValues = { content: "", adress: "", category: "", city: "", dateOfTheEvent: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
+
     const { user } = useContext(AuthContext);
-   
+
     const addPost = async () => {
         console.log(user);
         await axios.post(`http://localhost:3001/CreateAds/${user.result[0].id}`, {
             user_id: user.result[0].id,
             content: formValues.content,
-            adress: formValues.adress
+            adress: formValues.adress,
+            category: formValues.category,
+            city: formValues.city,
+            dateOfTheEvent: formValues.dateOfTheEvent
         }).then(() => {
             console.log('success');
             setFormValues(initialValues);
             redirect.push('/');
         })
     };
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -54,6 +63,7 @@ function CreateAds() {
         }
         return errors;
     };
+    const events = [{ text: "Kategorije" }, { text: "Kafići" }, { text: "Klubovi" }, { text: "Restorani" }, { text: "Sport" }, { text: "Kultura" }, { text: "Priroda" }, { text: "Studentska događanja" }, { text: "Privatne zabave" }];
     return (
         <div className="container">
             {Object.keys(formErrors).length === 0 && isSubmit ? (
@@ -79,7 +89,43 @@ function CreateAds() {
                         </div>
                     </div>
                     <p>{formErrors.adress}</p>
-                    <button type="submit" className="btn btn-success">Objavi</button>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-5">
+                                <div className="categories">
+                                    <select>
+                                        {events.map((val, i) => <option key={i}>{val.text}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className="town-filter">
+                                    <select>
+                                        {JSONDATA.map((val, key) => {
+                                            return <option key={key}> {val.town_name}</option>
+                                        })}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-md-4">
+                                <div className="calendar-filter"  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-calendar4-week" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z" />
+                                        <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                                    </svg>
+                                    <label>
+                                        <DatePicker selected={selectedDate}
+                                            onChange={date => setSelectedDate(date)}
+                                            dateFormat='dd/MM/yyyy'
+                                            minDate={new Date()}
+                                            isClearable
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" className="btn btn-success">Objavi</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

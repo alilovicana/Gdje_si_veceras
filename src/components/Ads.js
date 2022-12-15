@@ -12,19 +12,25 @@ import { Link } from 'react-router-dom';
 function Ads() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [adsList, showAdsList] = useState([]);
-  const [user, setUser] = useState({});
-  // const { user } = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const res = await axios.get(`/users?userId=${adsList.userId}`);
-  //     setUser(res.data);
-  //   };
-  //   fetchUser();
-  // }, [adsList.userId]);
-  const getAds = async () => {
-    await axios.get('http://localhost:3001/showAds').then((response) => {
+  const [filter, setFilter] = useState(false);
+  //Shows Ads when I load the page
+  useEffect(() => {
+    const getAds = async () => {
+      await axios.get('http://localhost:3001/showAds').then((response) => {
+        showAdsList(response.data);
+      })
+    };
+    getAds();
+  }, []);
+  //Filter
+  const filtering = async () => {
+    await axios.put('http://localhost:3001/filter', {
+      // category: events.option,
+      // city: formValues.city
+    }).then((response) => {
       showAdsList(response.data);
+      setFilter(true);
+      console.log(events.option.select)
     })
   };
   const addLike = async (id, likes) => {
@@ -47,10 +53,6 @@ function Ads() {
     console.log('button clicked');
   };
   const events = [{ text: "Kategorije" }, { text: "Kafići" }, { text: "Klubovi" }, { text: "Restorani" }, { text: "Sport" }, { text: "Kultura" }, { text: "Priroda" }, { text: "Studentska događanja" }, { text: "Privatne zabave" }];
-  //Shows Ads when I load the page
-  useEffect(() => {
-    getAds();
-  }, []);
   return (
     <div className="container">
       <div className="row">
@@ -87,35 +89,25 @@ function Ads() {
           </div>
         </div>
         <div className="col-md-1">
-          <button type="submit" className="btn btn-success">Filtriraj</button>
+          <button type="submit" className="btn btn-success" >Filtriraj</button>
         </div>
       </div>
       <div className="showAds" >
         {adsList.map((val, key) => {
           return <div className="ad" key={key}>
-            <div className="postTopLeft">
-              {/* <Link to={`/profile/${user.username}`}>
-                <img
-                  className="postProfileImg"
-                  src={
-                    user.profilePicture
-                      ?  user.profilePicture
-                      : "person/noAvatar.png"
-                  }
-                  alt=""
-                />
-              </Link> */}
-              <span className="postUsername">{user.username}</span>
-            </div>
+            <h6><i>{val.firstName}</i></h6>
             <h4> {val.content}</h4>
             <h5><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#bb2d3b" className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
             </svg>{val.adress}</a></h5>
-            <h5>Likes: {val.likes}</h5>
+            <h5 className="likes">Likes: {val.likes}</h5>
             <div>
               {""}
               <button type="submit" onClick={(e) => { addLike(val.id, val.likes + 1); handleClick(e) }} className="btn btn-success" > LIKE</button>
             </div>
+            {/* <h4> {val.city}</h4>
+            <h4> {val.category}</h4>
+            <h4> {val.dateOfTheEvent}</h4> */}
           </div>
         })}
       </div>
