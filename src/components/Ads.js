@@ -9,10 +9,15 @@ import { AuthContext } from "../context/AuthContext";
 import { Link } from 'react-router-dom';
 
 
+
 function Ads() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [adsList, showAdsList] = useState([]);
+  const [formValues, setFormValues] = useState({ city: "", category: "" });
   const [filter, setFilter] = useState(false);
+  const [cityState, setCityState] = useState('Bakar');
+  const [categoryState, setCategoryState] = useState('Kategorije');
+
   //Shows Ads when I load the page
   useEffect(() => {
     const getAds = async () => {
@@ -25,12 +30,11 @@ function Ads() {
   //Filter
   const filtering = async () => {
     await axios.put('http://localhost:3001/filter', {
-      // category: events.option,
-      // city: formValues.city
+      category: categoryState,
+      city: cityState
     }).then((response) => {
       showAdsList(response.data);
       setFilter(true);
-      console.log(events.option.select)
     })
   };
   const addLike = async (id, likes) => {
@@ -58,14 +62,22 @@ function Ads() {
       <div className="row">
         <div className="col-md-4">
           <div className="categories">
-            <select>
+            <select value={categoryState}
+              onChange={(e) => {
+                const selectedCaetgory = e.target.value;
+                setCategoryState(selectedCaetgory);
+              }}>
               {events.map((val, i) => <option key={i}>{val.text}</option>)}
             </select>
           </div>
         </div>
         <div className="col-md-3">
           <div className="town-filter">
-            <select>
+            <select value={cityState}
+              onChange={(e) => {
+                const selectedCity = e.target.value;
+                setCityState(selectedCity);
+              }}>
               {JSONDATA.map((val, key) => {
                 return <option key={key}> {val.town_name}</option>
               })}
@@ -89,7 +101,7 @@ function Ads() {
           </div>
         </div>
         <div className="col-md-1">
-          <button type="submit" className="btn btn-success" >Filtriraj</button>
+          <button type="submit" className="btn btn-success" onClick={()=>filtering()} >Filtriraj</button>
         </div>
       </div>
       <div className="showAds" >
