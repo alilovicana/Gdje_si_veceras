@@ -9,11 +9,12 @@ import { AuthContext } from "../context/AuthContext"
 function CreateAds() {
     let redirect = useHistory();
     const [selectedDate, setSelectedDate] = useState(null);
-    const initialValues = { content: "", adress: "", category: "", city: "", dateOfTheEvent: "" };
+    const initialValues = { content: "", adress: ""};
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-
+    const [cityState, setCityState] = useState('Bakar');
+    const [categoryState, setCategoryState] = useState('Kategorije');
     const { user } = useContext(AuthContext);
 
     const addPost = async () => {
@@ -22,16 +23,15 @@ function CreateAds() {
             user_id: user.result[0].id,
             content: formValues.content,
             adress: formValues.adress,
-            category: formValues.category,
-            city: formValues.city,
-            dateOfTheEvent: formValues.dateOfTheEvent
+            category: categoryState,
+            city: cityState,
+            date: selectedDate
         }).then(() => {
             console.log('success');
             setFormValues(initialValues);
             redirect.push('/');
         })
     };
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -93,14 +93,23 @@ function CreateAds() {
                         <div className="row">
                             <div className="col-md-5">
                                 <div className="categories">
-                                    <select>
+                                    <select
+                                        value={categoryState}
+                                        onChange={(e) => {
+                                            const selectedCaetgory = e.target.value;
+                                            setCategoryState(selectedCaetgory);
+                                        }}>
                                         {events.map((val, i) => <option key={i}>{val.text}</option>)}
                                     </select>
                                 </div>
                             </div>
                             <div className="col-md-3">
                                 <div className="town-filter">
-                                    <select>
+                                    <select value={cityState}
+                                        onChange={(e) => {
+                                            const selectedCity = e.target.value;
+                                            setCityState(selectedCity);
+                                        }}>
                                         {JSONDATA.map((val, key) => {
                                             return <option key={key}> {val.town_name}</option>
                                         })}
@@ -116,7 +125,7 @@ function CreateAds() {
                                     <label>
                                         <DatePicker selected={selectedDate}
                                             onChange={date => setSelectedDate(date)}
-                                            dateFormat='dd/MM/yyyy'
+                                            dateFormat='dd.MM.yyyy'
                                             minDate={new Date()}
                                             isClearable
                                         />

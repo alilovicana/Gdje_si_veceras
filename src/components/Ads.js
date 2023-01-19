@@ -5,18 +5,16 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './Components.css';
 import axios from 'axios';
-import { AuthContext } from "../context/AuthContext";
-import { Link } from 'react-router-dom';
-
-
+import { colors } from "@material-ui/core";
 
 function Ads() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [adsList, showAdsList] = useState([]);
-  const [formValues, setFormValues] = useState({ city: "", category: "" });
-  const [filter, setFilter] = useState(false);
   const [cityState, setCityState] = useState('Bakar');
   const [categoryState, setCategoryState] = useState('Kategorije');
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(0);
+  const [userLiked, setUserLiked] = useState(false);
 
   //Shows Ads when I load the page
   useEffect(() => {
@@ -31,10 +29,10 @@ function Ads() {
   const filtering = async () => {
     await axios.put('http://localhost:3001/filter', {
       category: categoryState,
-      city: cityState
+      city: cityState,
+      date: selectedDate
     }).then((response) => {
       showAdsList(response.data);
-      setFilter(true);
     })
   };
   const addLike = async (id, likes) => {
@@ -51,11 +49,21 @@ function Ads() {
       showAdsList(newState);
     })
   };
-  const handleClick = (event) => {
-    event.currentTarget.disabled = true;
-    console.log(event);
-    console.log('button clicked');
-  };
+  // useEffect(() => {
+  //   // Check if user has already liked the post
+  //   const checkIfUserLiked = async () => {
+  //     const response = await fetch('/api/check-like');
+  //     const data = await response.json();
+  //     setUserLiked(data.userLiked);
+  //     setLikes(data.likes);
+  //   }
+  //   checkIfUserLiked();
+  // }, []);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setLiked(!liked);
+  }
   const events = [{ text: "Kategorije" }, { text: "Kafići" }, { text: "Klubovi" }, { text: "Restorani" }, { text: "Sport" }, { text: "Kultura" }, { text: "Priroda" }, { text: "Studentska događanja" }, { text: "Privatne zabave" }];
   return (
     <div className="container">
@@ -93,7 +101,7 @@ function Ads() {
             <label>
               <DatePicker selected={selectedDate}
                 onChange={date => setSelectedDate(date)}
-                dateFormat='dd/MM/yyyy'
+                dateFormat='dd.MM.yyyy'
                 minDate={new Date()}
                 isClearable
               />
@@ -101,7 +109,7 @@ function Ads() {
           </div>
         </div>
         <div className="col-md-1">
-          <button type="submit" className="btn btn-success" onClick={()=>filtering()} >Filtriraj</button>
+          <button type="submit" className="btn btn-success" onClick={() => filtering()} >Filtriraj</button>
         </div>
       </div>
       <div className="showAds" >
@@ -115,12 +123,17 @@ function Ads() {
             <h5 className="likes">Likes: {val.likes}</h5>
             <div>
               {""}
-              <button type="submit" onClick={(e) => { addLike(val.id, val.likes + 1); handleClick(e) }} className="btn btn-success" > LIKE</button>
+              {liked ? (<svg onClick={(e) => { addLike(val.id, val.likes - 1); handleClick(e) }} xmlns="http://www.w3.org/2000/svg" style={{ color: "red" }} width="16" height="16" fill="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+              </svg>) : (<svg onClick={(e) => { addLike(val.id, val.likes + 1); handleClick(e) }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+              </svg>)}
             </div>
             {/* <h4> {val.city}</h4>
             <h4> {val.category}</h4>
             <h4> {val.dateOfTheEvent}</h4> */}
           </div>
+
         })}
       </div>
     </div >
