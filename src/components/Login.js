@@ -1,10 +1,11 @@
+import React from "react";
 import { useState, useEffect, useRef, useContext } from "react";
 import "./Components.css";
 import axios from "axios";
 import { useHistory } from 'react-router-dom'
 import { loginCall } from "../apiCalls"
 import { AuthContext } from "../context/AuthContext";
-import { CircularProgress } from "@material-ui/core";
+// import { CircularProgress } from "@material-ui/core";
 
 function Login() {
     let redirect = useHistory();
@@ -29,7 +30,7 @@ function Login() {
             if (!response.data.auth) {
                 setLoginStatus(false);
             } else {
-                loginCall({ email: email.current.value, password: password.current.value },dispatch);
+                loginCall({ email: email.current.value, password: password.current.value }, dispatch);
                 setLoginStatus(true);
                 redirect.push('/');
             }
@@ -103,7 +104,8 @@ function Login() {
                     </div>
                     <p>{formErrors.password}</p>
                     <button onClick={login} type="submit" className="btn btn-success" disabled={isFetching}> {isFetching ? (
-                       <CircularProgress color="white" size="20px" />
+                        // <CircularProgress color="white" size="20px" />
+                        "odjava"
                     ) : (
                         "Prijava"
                     )}</button>

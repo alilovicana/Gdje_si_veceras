@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect, useRef, useContext } from "react";
 import JSONDATA from '../MOCK_DATA.json';
 import DatePicker from 'react-datepicker';
