@@ -60,5 +60,8 @@
       "last 1 safari version"
     ]
   },
-  "proxi":"http://localhost:3001/"
+  "proxi": "http://localhost:3001/",
+  "devDependencies": {
+    "webpack-cli": "^5.0.1"
+  }
 }

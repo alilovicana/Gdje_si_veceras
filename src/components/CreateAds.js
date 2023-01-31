@@ -6,26 +6,28 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom'
 import { withRouter } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext"
+import ImageUploader from "./ImageUploader";
 function CreateAds() {
     let redirect = useHistory();
     const [selectedDate, setSelectedDate] = useState(null);
-    const initialValues = { content: "", adress: ""};
+    const initialValues = { content: "", adress: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [cityState, setCityState] = useState('Bakar');
     const [categoryState, setCategoryState] = useState('Kategorije');
     const { user } = useContext(AuthContext);
+    const [image, setImg] = useState("");
 
     const addPost = async () => {
-        console.log(user);
         await axios.post(`http://localhost:3001/CreateAds/${user.result[0].id}`, {
             user_id: user.result[0].id,
             content: formValues.content,
             adress: formValues.adress,
             category: categoryState,
             city: cityState,
-            date: selectedDate
+            date: selectedDate,
+            picture: image
         }).then(() => {
             console.log('success');
             setFormValues(initialValues);
@@ -63,6 +65,7 @@ function CreateAds() {
         }
         return errors;
     };
+
     const events = [{ text: "Kategorije" }, { text: "Kafići" }, { text: "Klubovi" }, { text: "Restorani" }, { text: "Sport" }, { text: "Kultura" }, { text: "Priroda" }, { text: "Studentska događanja" }, { text: "Privatne zabave" }];
     return (
         <div className="container">
@@ -137,6 +140,9 @@ function CreateAds() {
                     </div>
                 </div>
             </form>
+            <div>
+                <ImageUploader />
+            </div>
         </div>
     );
 }

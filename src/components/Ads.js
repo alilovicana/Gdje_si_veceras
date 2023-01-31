@@ -7,6 +7,7 @@ import './Components.css';
 import axios from 'axios';
 import { colors } from "@material-ui/core";
 
+
 function Ads() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [adsList, showAdsList] = useState([]);
@@ -117,6 +118,7 @@ function Ads() {
           return <div className="ad" key={key}>
             <h6><i>{val.firstName}</i></h6>
             <h4> {val.content}</h4>
+            <img src={val.picture}/>
             <h5><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#bb2d3b" className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
               <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
             </svg>{val.adress}</a></h5>

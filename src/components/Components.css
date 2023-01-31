@@ -33,6 +33,10 @@ body {
   margin-top: 10px;
   font-size: x-large;
 }
+.header .container .row .col-md-5{
+  display:flex;
+  display: inline-block;
+}
 
 .header .navbar ul {
   list-style: none;
