@@ -199,9 +199,9 @@ body {
 
 .showAds .ad {
   width: 700px;
-  height: 180px;
+  height:400px;
   padding:20px;
-  margin:20px;
+ margin:20px; 
   background-color: lightgray;
   border:1px solid black;
 }
