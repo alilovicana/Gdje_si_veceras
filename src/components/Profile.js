@@ -16,7 +16,7 @@ const Profile = () => {
   const [profile, setprofile] = useState([]);
   const [pview, setpview] = useState(false);
   const [dialogs, setdialogs] = useState(false);
-  const initialValues = { profile_image: "profile.png", about_me: "Zagarantitano dobra zabava", email: "email@gmail.com", first_and_last_name: "Ime i Prezime", rating: "5", phone_number: "099/999/9999" };
+  const initialValues = { profile_image: "eye.jpg", about_me: "Have a nice time", costum_email: "email@gmail.com", first_and_last_name: "Full Name", phone_number: "099/999/9999" };
   const [formValues, setFormValues] = useState(initialValues);
   const [activateUpdation, setActivateUpdation] = useState(false)
   const { user } = useContext(AuthContext);
@@ -24,7 +24,7 @@ const Profile = () => {
   const profileFinal = profile.map((item) => item.pview);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       if (localStorage.length != 0) {
         await axios.get(`http://localhost:3001/Profile/${user.result[0].id}`).then((response) => {
           console.log(response);
@@ -63,12 +63,11 @@ const Profile = () => {
   const profileInformation = async () => {
     await axios.post(`http://localhost:3001/Profile/${user.result[0].id}`, {
       user_id: user.result[0].id,
-      // profile_image = req.body.profile_image;
-      // first_and_last_name: formValues.first_and_last_name,
-      email: formValues.email,
-      phone_number: formValues.phone_number,
+      profile_image: formValues.profile_image,
       about_me: formValues.about_me,
-      // rating: formValues.rating,
+      costum_email: formValues.costum_email,
+      first_and_last_name: formValues.first_and_last_name,
+      phone_number: formValues.phone_number,
     }).then(() => {
       console.log('success');
       setFormValues(initialValues);
@@ -78,12 +77,11 @@ const Profile = () => {
   const updateProfile = async () => {
     await axios.put(`http://localhost:3001/UpdateProfile/${user.result[0].id}`, {
       user_id: user.result[0].id,
-      // profile_image = req.body.profile_image;
-      // first_and_last_name: formValues.first_and_last_name,
-      email: formValues.email,
-      phone_number: formValues.phone_number,
+      profile_image: formValues.profile_image,
       about_me: formValues.about_me,
-      // rating: formValues.rating,
+      costum_email: formValues.costum_email,
+      first_and_last_name: formValues.first_and_last_name,
+      phone_number: formValues.phone_number,
     }).then(() => {
       console.log('success');
       setFormValues(initialValues);
@@ -97,11 +95,11 @@ const Profile = () => {
         alt=""
         onClick={() => setimagecrop(true)} />
 
-        <label htmlFor='' className='mt-3 font-semibold text-5xl'>{formValues.first_and_last_name}</label>
+        {formValues && <label htmlFor='' className='mt-3 font-semibold text-5xl'>{formValues.first_and_last_name}</label>}
         <div className="modal" tabIndex="-1">
           <div className="modal-dialog">
             <Dialog visible={imagecrop} header={() => (
-              <p htmlFor="" className="text-2xl font-semibold textColor">Uredi sliku profila</p>
+              <p htmlFor="" className="text-2xl font-semibold textColor">Update profile picture</p>
             )}
               onHide={() => setimagecrop(false)}
             >
@@ -137,44 +135,38 @@ const Profile = () => {
       {activateUpdation ? (
         <form onSubmit={handleSubmit2}>
           <div className="ui form">
-            <div className="email">
-              <label className="form__label" htmlFor="email">Email: </label>
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={formValues.email}
-                onChange={handleInputChange}
-              />
+            <div className="costum_email">
+              <label className="form__label" htmlFor="costum_email">Email: </label>
+              {formValues && <input type="text" name="costum_email" value={formValues.costum_email} onChange={handleInputChange} placeholder="Email" />}
             </div>
             <div className="Broj Telefona">
-              <label className="form__label" htmlFor="phone_number">Broj Telefona: </label>
-              <input type="text" name='phone_number' value={formValues.phone_number} onChange={handleInputChange} placeholder="Broj telefona" />
+              <label className="form__label" htmlFor="phone_number">Phone Number: </label>
+              {formValues && <input type="text" name='phone_number' value={formValues.phone_number} onChange={handleInputChange} placeholder="Phone Number" />}
             </div>
             <div className="oMeni">
-              <label className="form__label" htmlFor="aboutMe">O meni:</label>
-              <textarea name='about_me' id='about_me' cols="50" rows="8" value={formValues.about_me} onChange={handleInputChange}></textarea>
+              <label className="form__label" htmlFor="aboutMe">About me:</label>
+              {formValues && <textarea name='about_me' id='about_me' cols="50" rows="8" value={formValues.about_me} onChange={handleInputChange}></textarea>}
             </div>
           </div>
           <div className="register-btn">
-            <button type="submit" className="btn btn-success" >Sačuvaj</button>
+            <button type="submit" className="btn btn-success" >Save</button>
           </div>
         </form >
       ) : (
         <form onSubmit={handleSubmit}>
           <div className="ui form">
-            <button type="submit" className="btn btn-success" >Uredi profil</button>
-            <div className="email">
-              <label className="form__label" htmlFor="email">Email: </label>
-              <label htmlFor='' className='mt-3 font-semibold text-5xl'>{formValues.email}</label>
-            </div>
+            <button type="submit" className="btn btn-success" >Update Profile</button>
             <div className="Broj Telefona">
-              <label className="form__label" htmlFor="phone_number">Broj Telefona: </label>
-              <label htmlFor='' className='mt-3 font-semibold text-5xl'>{formValues.phone_number}</label>
+              <label className="form__label" htmlFor="phone_number">Phone Number: </label>
+              {formValues && <label htmlFor='' className='mt-3 font-semibold text-5xl'>{formValues.phone_number}</label>}
+            </div>
+            <div className="costum_email">
+              <label className="form__label" htmlFor="costum_email">Email: </label>
+              {formValues && <label htmlFor='' className='mt-3 font-semibold text-5xl'>{formValues.costum_email}</label>}
             </div>
             <div className="oMeni">
-              <label className="form__label" htmlFor="aboutMe">O meni:</label>
-              <label htmlFor='' className='mt-3 font-semibold text-5xl'>{formValues.about_me}</label>
+              <label className="form__label" htmlFor="aboutMe">About me:</label>
+              {formValues && <label htmlFor='' className='mt-3 font-semibold text-5xl'>{formValues.about_me}</label>}
             </div>
           </div>
         </form >

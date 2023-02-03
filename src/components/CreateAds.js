@@ -67,7 +67,7 @@ function CreateAds() {
         return errors;
     };
 
-    const events = [{ text: "Kategorije" }, { text: "Kafići" }, { text: "Klubovi" }, { text: "Restorani" }, { text: "Sport" }, { text: "Kultura" }, { text: "Priroda" }, { text: "Studentska događanja" }, { text: "Privatne zabave" }];
+    const events = [{ text: "Categories" }, { text: "Caffe bars" }, { text: "Clubs" }, { text: "Restaurants" }, { text: "Sport" }, { text: "Culture Events" }, { text: "Events in Nature" }, { text: "Students Events" }, { text: "Private Parties" }];
     return (
         <div className="container">
             {Object.keys(formErrors).length === 0 && isSubmit ? (
@@ -78,7 +78,7 @@ function CreateAds() {
             <form onSubmit={handleSubmit}>
                 <div className="ui form">
                     <div className="field">
-                        <label>Novi oglas</label>
+                        <label>NEW POST</label>
                         <textarea name='content' id="content" cols="60" rows="10" value={formValues.content} onChange={handleChange}></textarea>
                     </div>
                     <p>{formErrors.content}</p>
@@ -89,7 +89,7 @@ function CreateAds() {
                                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
                                 </svg>
                             </span>
-                            <input name="adress" type="text" className='form-control' placeholder="Lokacija" value={formValues.adress} aria-label="Input group example" aria-describedby="basic-addon1" onChange={handleChange} />
+                            <input name="adress" type="text" className='form-control' placeholder="Location" value={formValues.adress} aria-label="Input group example" aria-describedby="basic-addon1" onChange={handleChange} />
                         </div>
                     </div>
                     <p>{formErrors.adress}</p>
@@ -136,7 +136,7 @@ function CreateAds() {
                                     </label>
                                 </div>
                             </div>
-                            <button type="submit" className="btn btn-success">Objavi</button>
+                            <button type="submit" className="btn btn-success">Submit</button>
                         </div>
                     </div>
                 </div>

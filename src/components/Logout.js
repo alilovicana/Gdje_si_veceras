@@ -10,7 +10,7 @@ const LogOut = () => {
     <div className='video'>
       <video src={video} autoPlay />
       <div className="logout-btn">
-        <button onClick={handleLogout} name="logout" type="submit" className="btn btn-success">Odjava</button>
+        <button onClick={handleLogout} name="logout" type="submit" className="btn btn-success">Log Out</button>
       </div>
     </div>
 

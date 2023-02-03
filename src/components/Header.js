@@ -22,16 +22,16 @@ function Header() {
                 {
                   user ? (
                     <ul >
-                      <li><NavLink exact to="/">OGLASI</NavLink></li>
-                      <li><NavLink to={"/CreateAds" + '/' + user.result[0].id + '/'}>KREIRAJ OGLAS</NavLink></li>
-                      <li ><NavLink to={"/Profile" + '/' + user.result[0].id + '/'}>PROFIL</NavLink></li>
-                      <li ><NavLink to="/Logout">ODJAVA</NavLink></li>
+                      <li><NavLink exact to="/">POSTS</NavLink></li>
+                      <li><NavLink to={"/CreateAds" + '/' + user.result[0].id + '/'}>CREATE POST</NavLink></li>
+                      <li ><NavLink to={"/Profile" + '/' + user.result[0].id + '/'}>PROFILE</NavLink></li>
+                      <li ><NavLink to="/Logout">LOG OUT</NavLink></li>
                     </ul>
                   ) : (
                     <ul >
-                      <li ><NavLink exact to="/">OGLASI</NavLink></li>
-                      <li ><NavLink to="/Login">PRIJAVA</NavLink></li>
-                      <li ><NavLink to="/Registration">REGISTRACIJA</NavLink></li>
+                      <li ><NavLink exact to="/">POSTS</NavLink></li>
+                      <li ><NavLink to="/Login">LOG IN</NavLink></li>
+                      <li ><NavLink to="/Registration">REGISTRATION</NavLink></li>
                     </ul>
                   )
                 }

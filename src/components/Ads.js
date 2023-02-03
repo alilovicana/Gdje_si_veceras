@@ -37,7 +37,7 @@ function Ads() {
   };
   //part for Likes
   const addLike = async (id, likes) => {
-    await axios.put('http://localhost:3001/Update', {
+    await axios.put('http://localhost:3001/update', {
       id,
       likes
     }).then((response) => {
@@ -65,7 +65,7 @@ function Ads() {
     e.preventDefault();
     setLiked(!liked);
   }
-  const events = [{ text: "Kategorije" }, { text: "Kafići" }, { text: "Klubovi" }, { text: "Restorani" }, { text: "Sport" }, { text: "Kultura" }, { text: "Priroda" }, { text: "Studentska događanja" }, { text: "Privatne zabave" }];
+  const events = [{ text: "Categories" }, { text: "Caffe bars" }, { text: "Clubs" }, { text: "Restaurants" }, { text: "Sport" }, { text: "Culture Events" }, { text: "Events in Nature" }, { text: "Students Events" }, { text: "Private Parties" }];
   return (
     <div className="container">
       <div className="row">
@@ -110,7 +110,7 @@ function Ads() {
           </div>
         </div>
         <div className="col-md-1">
-          <button type="submit" className="btn btn-success" onClick={() => filtering()} >Filtriraj</button>
+          <button type="submit" className="btn btn-success" onClick={() => filtering()} >Filter</button>
         </div>
       </div>
       <div className="showAds" >
@@ -130,6 +130,7 @@ function Ads() {
               </svg>) : (<svg onClick={(e) => { addLike(val.id, val.likes + 1); handleClick(e) }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-heart" viewBox="0 0 16 16">
                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
               </svg>)}
+              {console.log(val.id)}
             </div>
             <img src={val.profile_image} />
             <h6><i>{val.first_and_last_name}</i></h6>
