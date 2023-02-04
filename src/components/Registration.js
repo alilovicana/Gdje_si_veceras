@@ -3,16 +3,17 @@ import { useState, useEffect, useRef } from "react";
 import "./Components.css";
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import styled from "styled-components";
 
 function Registration() {
-    let redirect=useHistory();
+    let redirect = useHistory();
     const initialValues = { firstName: "", lastName: "", email: "", password: "", confirmPassword: "" };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const passwordInputRef = useRef();
-   
+
     const addUser = async () => {
         await axios.post('http://localhost:3001/Registration', {
             firstName: formValues.firstName,
@@ -72,81 +73,130 @@ function Registration() {
         }
         return errors;
     };
-    const RedirectToLogin=()=>{
+    const RedirectToLogin = () => {
         redirect.push('/Login');
     }
     return (
-        <div className="container">
-            {Object.keys(formErrors).length === 0 && isSubmit ? (
-                <div className="ui message success">Registracija uspješna!</div>
-            ) : (
-                <div className="ui message success">...</div>
-            )}
-
+        <RegistrationContainer>
             <form onSubmit={handleSubmit}>
-                <div className="ui form">
-                    <div className="field">
-                        <label>Ime</label>
-                        <input
-                            type="text"
-                            name="firstName"
-                            placeholder="Ime"
-                            value={formValues.firstName}
-                            onChange={handleChange}
-                        />
+                <div className="container">
+                    <div className="loginWrapper">
+                        <div className="loginLeft">
+                            <h3 className="loginLogo">WhereTonight?</h3>
+                            <span className="loginDesc">
+                                Connect with events and the world around you with WhereTonight?
+                            </span>
+                        </div>
+                        <div className="loginRight">
+                            <div className="loginBox">
+                                <input placeholder="Name" className="loginInput" onChange={handleChange} type="text" name="firstName" value={formValues.firstName} />
+                                <div className="error">{formErrors.firstName}</div>
+                                <input placeholder="Surname" className="loginInput" onChange={handleChange} type="text" name="lastName" value={formValues.lastName} />
+                                <div className="error">{formErrors.lastName}</div>
+                                <input placeholder="Email" className="loginInput" type="email" name="email" value={formValues.email} onChange={handleChange} />
+                                <div className="error">{formErrors.email}</div>
+                                <input placeholder="Password" className="loginInput" ref={passwordInputRef} type="password" name="password" value={formValues.password} onChange={handleChange} />
+                                <div className="error">{formErrors.password}</div>
+                                <input placeholder="Confirm Password" className="loginInput" type="password" name="confirmPassword" value={formValues.confirmPassword} onChange={handleChange} />
+                                <div className="error">{formErrors.confirmPassword}</div>
+                                <button className="loginButton">Sign Up</button>
+                                <button className="loginRegisterButton" onClick={RedirectToLogin} >
+                                    Log into Account
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <p>{formErrors.firstName}</p>
-                    <div className="field">
-                        <label>Prezime</label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            placeholder="Prezime"
-                            value={formValues.lastName}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <p>{formErrors.lastName}</p>
-                    <div className="field">
-                        <label>Email</label>
-                        <input
-                            type="text"
-                            name="email"
-                            placeholder="Email"
-                            value={formValues.email}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <p>{formErrors.email}</p>
-                    <div className="field">
-                        <label>Lozinka</label>
-                        <input
-                            ref={passwordInputRef}
-                            type="password"
-                            name="password"
-                            placeholder="Lozinka"
-                            value={formValues.password}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <p>{formErrors.password}</p>
-                    <div className="field">
-                        <label>Potvrdi lozinku</label>
-                        <input
-                            type="password"
-                            name="confirmPassword"
-                            placeholder="Potvrdi lozinku"
-                            value={formValues.confirmPassword}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <p>{formErrors.confirmPassword}</p>
-                    <button type="submit" className="btn btn-success">Registracija</button>
-                    <button  onClick={RedirectToLogin} type="submit" className="btn btn-success">Imate već registriran račun</button>
                 </div>
             </form>
-        </div>
+        </RegistrationContainer>
     );
 }
+const RegistrationContainer = styled.div`
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loginWrapper {
+    width: 70%;
+    height: 70%;
+    display: flex;
+  }
+  
+  .loginLeft,
+  .loginRight {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .loginLogo {
+    font-size: 40px;
+    font-weight: 800;
+    color: rgb(255, 174, 0);
+    margin-bottom: 10px;
+  }
+  .error{
+    color:red;
+  }
+  .loginDesc {
+    font-size: 24px;
+  }
+  
+  .loginBox{
+      height: 500px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  
+  .loginInput{
+      height: 50px;
+      border-radius: 10px;
+      border: 1px solid gray;
+      font-size: 18px;
+      padding-left: 20px;
+  }
+  
+  .loginInput:focus{
+      outline: none;
+  }
+  
+  .loginButton{
+      height: 50px;
+      border-radius: 10px;
+      border: none;
+      background-color: #1775ee;
+      color: white;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+  }
+  
+  .loginForgot{
+      text-align: center;
+      color: #1775ee;
+  }
+  
+  .loginRegisterButton{
+      width: 60%;
+      align-self: center;
+      height: 50px;
+      border-radius: 10px;
+      border: none;
+      background-color: #42b72a;
+      color: white;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+  }`;
 
 export default Registration;
