@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import "./Components.css";
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
 import { useHistory } from 'react-router-dom'
@@ -133,6 +132,7 @@ const RegistrationContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding:10px;
   }
   
   .loginLogo {
