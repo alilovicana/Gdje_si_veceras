@@ -29,15 +29,14 @@ yarn build
 
 To start the application, follow these steps:
 
-###`1` Open Command Prompt by typing `cmd` in the Search Box.
+`1` Open Command Prompt by typing `cmd` in the Search Box.
 
-###`2` Navigate to the desired folder using the command `cd {desiredFolder}`.
+`2` Navigate to the desired folder using the command `cd {desiredFolder}`.
 
-###`3` Clone the application by typing `git clone git@github.com:alilovicana/Gdje_si_veceras.git`.
+`3` Clone the application by typing `git clone git@github.com:alilovicana/Gdje_si_veceras.git`.
 
-###`4` Open the project in Visual Studio Code.
-
-###`5` In a new terminal within Visual Studio Code, type  `npm install` to install the necessary packages, then type `npm run start` to start the application
+`4` Open the project in Visual Studio Code.
+`5` In a new terminal within Visual Studio Code, type  `npm install` to install the necessary packages, then type `npm run start` to start the application
 
                                    
                                                      
